@@ -5,7 +5,7 @@ import com.example.SongLingo.song.dto.SongDTO;
 import com.example.SongLingo.song.dto.SongTextDTO;
 import com.example.SongLingo.song.service.SongCategoryService;
 import com.example.SongLingo.song.service.SongService;
-import com.example.SongLingo.translate.TranslateWordRequest;
+import com.example.SongLingo.translate.WordTranslation;
 import com.example.SongLingo.translate.TranslationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,8 +56,8 @@ public class SongCommonController {
     }
 
     @PostMapping("/translate-word")
-    public ResponseEntity<String> translateWord(@RequestBody TranslateWordRequest translateWordRequest) {
-        String translatedWord = translationService.translateWord(translateWordRequest);
+    public ResponseEntity<String> translateWord(@RequestBody WordTranslation wordTranslation) {
+        String translatedWord = translationService.translateWord(wordTranslation);
         return ResponseEntity.ok(translatedWord);
     }
 }
