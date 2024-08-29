@@ -8,8 +8,6 @@ import com.example.SongLingo.song.entity.SongCategory;
 import com.example.SongLingo.song.entity.SongText;
 import com.example.SongLingo.song.repository.SongCategoryRepository;
 import com.example.SongLingo.song.repository.SongRepository;
-import com.example.SongLingo.song.repository.SongTextRepository;
-import com.example.SongLingo.translate.TranslationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -19,19 +17,14 @@ import java.util.List;
 @Service
 public class SongService {
     private final SongRepository songRepository;
-    private final SongTextRepository songTextRepository;
     private final SongCategoryRepository songCategoryRepository;
     private final EntityMapper entityMapper;
-    private final TranslationService translationService;
 
-    public SongService(SongRepository songRepository, SongTextRepository songTextRepository,
-                       SongCategoryRepository songCategoryRepository, EntityMapper entityMapper,
-                       TranslationService translationService) {
+    public SongService(SongRepository songRepository, SongCategoryRepository songCategoryRepository,
+                       EntityMapper entityMapper) {
         this.songRepository = songRepository;
-        this.songTextRepository = songTextRepository;
         this.songCategoryRepository = songCategoryRepository;
         this.entityMapper = entityMapper;
-        this.translationService = translationService;
     }
 
     public SongDTO createSong(String title, String author, Long categoryId) {
@@ -83,5 +76,4 @@ public class SongService {
         }
         songRepository.deleteAll();
     }
-
 }

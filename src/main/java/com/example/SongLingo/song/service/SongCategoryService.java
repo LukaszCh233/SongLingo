@@ -1,5 +1,6 @@
 package com.example.SongLingo.song.service;
 
+import com.example.SongLingo.exception.ExistsException;
 import com.example.SongLingo.mapper.EntityMapper;
 import com.example.SongLingo.song.dto.SongCategoryDTO;
 import com.example.SongLingo.song.entity.SongCategory;
@@ -22,7 +23,7 @@ public class SongCategoryService {
 
     public SongCategory createSongCategory(SongCategory songCategory) {
         if (songCategoryRepository.findByNameIgnoreCase(songCategory.getName()).isPresent()) {
-            throw new EntityExistsException("Category exists");
+            throw new ExistsException("Category exists");
         }
         return songCategoryRepository.save(songCategory);
     }

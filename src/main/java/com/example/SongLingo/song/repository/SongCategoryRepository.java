@@ -8,6 +8,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface SongCategoryRepository extends JpaRepository<SongCategory, Long> {
-    @Query("SELECT s FROM SongCategory s WHERE LOWER(s.name) = LOWER(:name)")
-    Optional<SongCategory> findByNameIgnoreCase(@Param("name") String name);
+    Optional<SongCategory> findByNameIgnoreCase(String name);
 }
