@@ -1,6 +1,5 @@
 package com.example.SongLingo.flashcards.entity;
 
-import com.example.SongLingo.flashcards.entity.Catalog;
 import jakarta.persistence.*;
 import lombok.*;
 

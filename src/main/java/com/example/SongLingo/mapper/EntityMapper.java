@@ -1,9 +1,9 @@
 package com.example.SongLingo.mapper;
 
-import com.example.SongLingo.flashcards.entity.Catalog;
 import com.example.SongLingo.flashcards.dto.CatalogDTO;
-import com.example.SongLingo.flashcards.entity.FlashCard;
 import com.example.SongLingo.flashcards.dto.FlashCardDTO;
+import com.example.SongLingo.flashcards.entity.Catalog;
+import com.example.SongLingo.flashcards.entity.FlashCard;
 import com.example.SongLingo.song.dto.SongCategoryDTO;
 import com.example.SongLingo.song.dto.SongDTO;
 import com.example.SongLingo.song.dto.SongTextDTO;
@@ -63,21 +63,24 @@ public class EntityMapper {
                 .map(this::mapUserToUserDTO)
                 .collect(Collectors.toList());
     }
+
     public FlashCardDTO mapFlashCardToFlashCardDTO(FlashCard flashCard) {
         return new FlashCardDTO(flashCard.getWord(), flashCard.getTranslation());
     }
+
     public List<FlashCardDTO> mapFlashCardListToFlashCardListDTO(List<FlashCard> flashCardList) {
-        return  flashCardList.stream()
+        return flashCardList.stream()
                 .map(this::mapFlashCardToFlashCardDTO)
                 .collect(Collectors.toList());
     }
+
     public CatalogDTO mapCatalogToCatalogDTO(Catalog catalog) {
         return new CatalogDTO(catalog.getId(), catalog.getName());
     }
+
     public List<CatalogDTO> mapCatalogListToCatalogListDTO(List<Catalog> catalogList) {
         return catalogList.stream()
                 .map(this::mapCatalogToCatalogDTO)
                 .collect(Collectors.toList());
     }
-
 }

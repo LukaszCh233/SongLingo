@@ -5,7 +5,6 @@ import com.example.SongLingo.mapper.EntityMapper;
 import com.example.SongLingo.song.dto.SongCategoryDTO;
 import com.example.SongLingo.song.entity.SongCategory;
 import com.example.SongLingo.song.repository.SongCategoryRepository;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 

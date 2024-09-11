@@ -25,24 +25,28 @@ public class FlashCardController {
 
         return ResponseEntity.ok(catalog);
     }
+
     @PostMapping("/flashCard/{id}")
     public ResponseEntity<FlashCardDTO> addFlashCard(@PathVariable Long id, @RequestBody WordTranslation wordTranslation) {
-        FlashCardDTO flashCard = flashCardService.createFlashCard(id,wordTranslation);
+        FlashCardDTO flashCard = flashCardService.createFlashCard(id, wordTranslation);
 
         return ResponseEntity.ok(flashCard);
     }
+
     @GetMapping("/flashCard-set/{catalogId}")
     public ResponseEntity<List<FlashCardDTO>> displayFlashCards(@PathVariable Long catalogId) {
         List<FlashCardDTO> flashCardList = flashCardService.findFlashCardsByCatalogId(catalogId);
 
         return ResponseEntity.ok(flashCardList);
     }
+
     @DeleteMapping("/catalog/{id}")
     public ResponseEntity<String> deleteCatalog(@PathVariable Long id) {
         flashCardService.deleteCatalogById(id);
 
         return ResponseEntity.ok("Catalog has been deleted");
     }
+
     @DeleteMapping("/catalogs")
     public ResponseEntity<?> deleteAllCatalogs() {
         flashCardService.deleteAllCatalogs();
