@@ -76,4 +76,16 @@ public class SongService {
         }
         songRepository.deleteAll();
     }
+
+    public SongDTO updateSong(Long idSong, SongDTO song) {
+        Song songToUpdate = songRepository.findById(idSong).orElseThrow(() -> new EntityNotFoundException("song not found"));
+
+        songToUpdate.setTitle(song.title());
+        songToUpdate.setAuthor(song.author());
+        songToUpdate.getSongCategory().setName(song.category());
+
+        songRepository.save(songToUpdate);
+
+        return entityMapper.mapSongToSongDTO(songToUpdate);
+    }
 }

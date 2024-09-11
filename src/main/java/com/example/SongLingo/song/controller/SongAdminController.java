@@ -75,4 +75,11 @@ public class SongAdminController {
 
         return ResponseEntity.ok("All songs has been deleted");
     }
+
+    @PutMapping("/song/{idSong}")
+    public ResponseEntity<SongDTO> updateSong(@PathVariable Long idSong, @RequestBody SongDTO songDTO) {
+        SongDTO updatedSong = songService.updateSong(idSong, songDTO);
+
+        return ResponseEntity.ok(updatedSong);
+    }
 }

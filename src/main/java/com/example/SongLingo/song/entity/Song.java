@@ -15,7 +15,7 @@ public class Song {
     private Long id;
     private String title;
     private String author;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "song_text_id")
     private SongText songText;
     @ManyToOne

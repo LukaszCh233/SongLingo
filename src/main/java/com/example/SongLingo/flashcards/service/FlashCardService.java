@@ -61,14 +61,6 @@ public class FlashCardService {
         return entityMapper.mapFlashCardToFlashCardDTO(flashCard);
     }
 
-    public List<FlashCardDTO> findAllFlashCards() {
-        List<FlashCard> flashCardList = flashCardRepository.findAll();
-        if (flashCardList.isEmpty()) {
-            throw new EntityNotFoundException("List is empty");
-        }
-        return entityMapper.mapFlashCardListToFlashCardListDTO(flashCardList);
-    }
-
     public List<FlashCardDTO> findFlashCardsByCatalogId(Long catalogId) {
         Catalog catalog = catalogRepository.findById(catalogId).orElseThrow(() ->
                 new EntityNotFoundException("Not found catalog"));
