@@ -41,6 +41,27 @@ public class SongCommonController {
         return ResponseEntity.ok(songList);
     }
 
+    @GetMapping("songs/category/{name}")
+    public ResponseEntity<List<SongDTO>> displaySongsByCategory(@PathVariable String name) {
+        List<SongDTO> songsOfCategory = songService.findSongsByCategoryName(name);
+
+        return ResponseEntity.ok(songsOfCategory);
+    }
+
+    @GetMapping("songs/title/{title}")
+    public ResponseEntity<List<SongDTO>> displaySongsByTitle(@PathVariable String title) {
+        List<SongDTO> songsOfCategory = songService.findSongsByTitle(title);
+
+        return ResponseEntity.ok(songsOfCategory);
+    }
+
+    @GetMapping("songs/author/{author}")
+    public ResponseEntity<List<SongDTO>> displaySongsByAuthor(@PathVariable String author) {
+        List<SongDTO> songsOfCategory = songService.findSongsByAuthor(author);
+
+        return ResponseEntity.ok(songsOfCategory);
+    }
+
     @GetMapping("/song/{id}/text")
     public ResponseEntity<SongTextDTO> displaySongText(@PathVariable Long id) {
         SongTextDTO songText = songService.findSongTextBySongId(id);

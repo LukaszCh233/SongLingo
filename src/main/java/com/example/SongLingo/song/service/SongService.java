@@ -57,6 +57,30 @@ public class SongService {
         return entityMapper.mapSongsToSongsDTO(songList);
     }
 
+    public List<SongDTO> findSongsByCategoryName(String name) {
+        List<Song> songsOfCategory = songRepository.findBySongCategoryNameIgnoreCase(name);
+        if (songsOfCategory.isEmpty()) {
+            throw new EntityNotFoundException("Not found songs");
+        }
+        return entityMapper.mapSongsToSongsDTO(songsOfCategory);
+    }
+
+    public List<SongDTO> findSongsByTitle(String title) {
+        List<Song> songList = songRepository.findByTitleIgnoreCase(title);
+        if (songList.isEmpty()) {
+            throw new EntityNotFoundException("Not found songs");
+        }
+        return entityMapper.mapSongsToSongsDTO(songList);
+    }
+
+    public List<SongDTO> findSongsByAuthor(String author) {
+        List<Song> songList = songRepository.findByAuthorIgnoreCase(author);
+        if (songList.isEmpty()) {
+            throw new EntityNotFoundException("Not found songs");
+        }
+        return entityMapper.mapSongsToSongsDTO(songList);
+    }
+
     public SongTextDTO findSongTextBySongId(Long songId) {
         Song song = songRepository.findById(songId).orElseThrow(() -> new EntityNotFoundException("Song not found"));
 
