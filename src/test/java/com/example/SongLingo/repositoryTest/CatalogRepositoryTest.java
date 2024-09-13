@@ -27,6 +27,7 @@ public class CatalogRepositoryTest {
 
         assertTrue(catalogRepository.existsByNameIgnoreCase("CATALOG"));
     }
+
     private void newCatalog(String name) {
         Catalog catalog = new Catalog();
         catalog.setName(name);

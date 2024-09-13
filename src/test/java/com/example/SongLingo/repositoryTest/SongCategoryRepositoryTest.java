@@ -25,7 +25,7 @@ public class SongCategoryRepositoryTest {
         Optional<SongCategory> foundSongCategory = songCategoryRepository.findByNameIgnoreCase("TestCategory");
 
         assertTrue(foundSongCategory.isPresent());
-        assertEquals(foundSongCategory.get().getName(),"testCategory");
+        assertEquals(foundSongCategory.get().getName(), "testCategory");
     }
 
     private void newSongCategory(String name) {
