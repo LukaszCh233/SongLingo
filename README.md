@@ -44,3 +44,29 @@ of foreign language texts within the app.
 - **Maven**
 - **IntelliJ IDEA**
 - **Postman**
+
+## Prerequisites
+Before you begin, ensure you have the following installed on your machine:
+- **Postman**: https://www.postman.com/downloads/
+- **Docker**: [Install Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose**: [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+## How to Run
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/LukaszCh233/SongLingo.git
+cd songLingo
+```
+
+### 2. Build and Start the Containers
+
+```bash
+docker-compose up --build
+```
+### 3. Stopping the Containers
+
+```bash
+docker-compose down
+```
