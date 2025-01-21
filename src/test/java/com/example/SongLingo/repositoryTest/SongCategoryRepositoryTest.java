@@ -1,7 +1,7 @@
 package com.example.SongLingo.repositoryTest;
 
-import com.example.SongLingo.song.entity.SongCategory;
-import com.example.SongLingo.song.repository.SongCategoryRepository;
+import com.example.SongLingo.song.songCategory.SongCategory;
+import com.example.SongLingo.song.songCategory.SongCategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

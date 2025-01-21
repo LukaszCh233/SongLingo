@@ -1,15 +1,16 @@
 package com.example.SongLingo.translate;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class WordTranslation {
+    @NotBlank(message = "word cannot be blank")
     private String word;
+    @NotBlank(message = "language cannot be blank")
     private String language;
 }

@@ -1,13 +1,11 @@
 package com.example.SongLingo.serviceTest;
 
-import com.example.SongLingo.song.dto.SongDTO;
-import com.example.SongLingo.song.dto.SongTextDTO;
-import com.example.SongLingo.song.entity.Song;
-import com.example.SongLingo.song.entity.SongCategory;
-import com.example.SongLingo.song.entity.SongText;
-import com.example.SongLingo.song.repository.SongCategoryRepository;
-import com.example.SongLingo.song.repository.SongRepository;
-import com.example.SongLingo.song.service.SongService;
+import com.example.SongLingo.song.SongText.SongTextDTO;
+import com.example.SongLingo.song.SongText.SongTextRequest;
+import com.example.SongLingo.song.SongText.SongTextService;
+import com.example.SongLingo.song.song.*;
+import com.example.SongLingo.song.songCategory.SongCategory;
+import com.example.SongLingo.song.songCategory.SongCategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ public class SongServiceTest {
     SongRepository songRepository;
     @Autowired
     SongService songService;
+    @Autowired
+    SongTextService songTextService;
 
     @BeforeEach
     public void setUp() {
@@ -36,8 +36,10 @@ public class SongServiceTest {
     @Test
     public void createdSongShouldBeFindInSongList_test() {
         SongCategory songCategory = newSongCategory("category");
+        SongCreationRequest songCreationRequest = new SongCreationRequest("title", "author",
+                songCategory.getId());
 
-        songService.createSong("title", "author", songCategory.getId());
+        songService.createSong(songCreationRequest);
 
         List<SongDTO> songList = songService.findAllSongs();
 
@@ -49,12 +51,12 @@ public class SongServiceTest {
     public void canAddTextToExistsSongAndDisplayThisText_test() {
         Song song = newSong();
 
-        SongText songText = new SongText();
-        songText.setText("text");
+        SongTextRequest songTextRequest = new SongTextRequest();
+        songTextRequest.setText("text");
 
-        songService.addTextToSong(song.getId(), songText);
+        songTextService.createSongText(song.getId(), songTextRequest);
 
-        SongTextDTO foundSongText = songService.findSongTextBySongId(song.getId());
+        SongTextDTO foundSongText = songTextService.findSongTextBySongId(song.getId());
 
         assertEquals(foundSongText.text(), "text");
     }

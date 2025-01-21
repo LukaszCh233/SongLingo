@@ -1,9 +1,11 @@
 package com.example.SongLingo.flashcards.controller;
 
-import com.example.SongLingo.flashcards.dto.CatalogDTO;
-import com.example.SongLingo.flashcards.dto.FlashCardDTO;
-import com.example.SongLingo.flashcards.service.FlashCardService;
+import com.example.SongLingo.flashcards.catalog.CatalogDTO;
+import com.example.SongLingo.flashcards.catalog.CatalogService;
+import com.example.SongLingo.flashcards.flashCard.FlashCardDTO;
+import com.example.SongLingo.flashcards.flashCard.FlashCardService;
 import com.example.SongLingo.translate.WordTranslation;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,20 +16,23 @@ import java.util.List;
 @RequestMapping("/common")
 public class FlashCardController {
     private final FlashCardService flashCardService;
+    private final CatalogService catalogService;
 
-    public FlashCardController(FlashCardService flashCardService) {
+    public FlashCardController(FlashCardService flashCardService, CatalogService catalogService) {
         this.flashCardService = flashCardService;
+        this.catalogService = catalogService;
     }
 
     @PostMapping("/catalog/{name}")
     public ResponseEntity<CatalogDTO> addCatalog(@PathVariable String name) {
-        CatalogDTO catalog = flashCardService.createCatalog(name);
+        CatalogDTO catalog = catalogService.createCatalog(name);
 
         return ResponseEntity.ok(catalog);
     }
 
     @PostMapping("/flashCard/{id}")
-    public ResponseEntity<FlashCardDTO> addFlashCard(@PathVariable Long id, @RequestBody WordTranslation wordTranslation) {
+    public ResponseEntity<FlashCardDTO> addFlashCard(@PathVariable Long id,
+                                                     @RequestBody @Valid WordTranslation wordTranslation) {
         FlashCardDTO flashCard = flashCardService.createFlashCard(id, wordTranslation);
 
         return ResponseEntity.ok(flashCard);
@@ -42,14 +47,14 @@ public class FlashCardController {
 
     @DeleteMapping("/catalog/{id}")
     public ResponseEntity<String> deleteCatalog(@PathVariable Long id) {
-        flashCardService.deleteCatalogById(id);
+        catalogService.deleteCatalogById(id);
 
         return ResponseEntity.ok("Catalog has been deleted");
     }
 
     @DeleteMapping("/catalogs")
     public ResponseEntity<?> deleteAllCatalogs() {
-        flashCardService.deleteAllCatalogs();
+        catalogService.deleteAllCatalogs();
 
         return ResponseEntity.ok("Catalogs has been deleted");
     }

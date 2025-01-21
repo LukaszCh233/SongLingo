@@ -1,11 +1,13 @@
 package com.example.SongLingo.song.controller;
 
-import com.example.SongLingo.song.dto.SongDTO;
-import com.example.SongLingo.song.entity.Song;
-import com.example.SongLingo.song.entity.SongCategory;
-import com.example.SongLingo.song.entity.SongText;
-import com.example.SongLingo.song.service.SongCategoryService;
-import com.example.SongLingo.song.service.SongService;
+import com.example.SongLingo.song.SongText.SongTextRequest;
+import com.example.SongLingo.song.SongText.SongTextService;
+import com.example.SongLingo.song.song.SongCreationRequest;
+import com.example.SongLingo.song.song.SongDTO;
+import com.example.SongLingo.song.song.SongService;
+import com.example.SongLingo.song.songCategory.SongCategory;
+import com.example.SongLingo.song.songCategory.SongCategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +17,25 @@ import org.springframework.web.bind.annotation.*;
 public class SongAdminController {
     private final SongCategoryService songCategoryService;
     private final SongService songService;
+    private final SongTextService songTextService;
 
-    public SongAdminController(SongCategoryService songCategoryService, SongService songService) {
+    public SongAdminController(SongCategoryService songCategoryService, SongService songService,
+                               SongTextService songTextService) {
         this.songCategoryService = songCategoryService;
         this.songService = songService;
+        this.songTextService = songTextService;
     }
 
-    @PostMapping("/song-category")
-    public ResponseEntity<SongCategory> addSongCategory(@RequestBody SongCategory songCategory) {
-        SongCategory createSongCategory = songCategoryService.createSongCategory(songCategory);
+    @PostMapping("/song-category/{categoryName}")
+    public ResponseEntity<SongCategory> addSongCategory(@PathVariable String categoryName) {
+        SongCategory createSongCategory = songCategoryService.createSongCategory(categoryName);
 
         return ResponseEntity.ok(createSongCategory);
     }
 
-    @DeleteMapping("/song-category/{id}")
-    public ResponseEntity<String> deleteSongCategory(@PathVariable Long id) {
-        songCategoryService.deleteSongCategoryById(id);
+    @DeleteMapping("/song-category/{songCategoryId}")
+    public ResponseEntity<String> deleteSongCategory(@PathVariable Long songCategoryId) {
+        songCategoryService.deleteSongCategoryById(songCategoryId);
 
         return ResponseEntity.ok("Category has been deleted");
     }
@@ -41,30 +46,32 @@ public class SongAdminController {
         return ResponseEntity.ok("All categories has been deleted");
     }
 
-    @PutMapping("/song-category/{id}")
-    public ResponseEntity<String> updateSongCategory(@PathVariable Long id, @RequestBody SongCategory songCategory) {
-        songCategoryService.updateSongCategory(id, songCategory);
+    @PutMapping("/song-category/{songCategoryId}/{name}")
+    public ResponseEntity<String> updateSongCategory(@PathVariable Long songCategoryId,
+                                                     @PathVariable String name) {
+        songCategoryService.updateSongCategory(songCategoryId, name);
 
         return ResponseEntity.ok("Song category has been updated");
     }
 
     @PostMapping("/song")
-    public ResponseEntity<SongDTO> addSong(@RequestBody Song song) {
-        SongDTO createSong = songService.createSong(song.getTitle(), song.getAuthor(), song.getSongCategory().getId());
+    public ResponseEntity<SongDTO> addSong(@RequestBody @Valid SongCreationRequest songCreationRequest) {
+        SongDTO createSong = songService.createSong(songCreationRequest);
 
         return ResponseEntity.ok(createSong);
     }
 
-    @PostMapping("/song/{id}/text")
-    public ResponseEntity<String> addTextToSong(@PathVariable Long id, @RequestBody SongText songText) {
-        songService.addTextToSong(id, songText);
+    @PostMapping("/song/{songId}/text")
+    public ResponseEntity<String> addTextToSong(@PathVariable Long songId,
+                                                @RequestBody @Valid SongTextRequest songText) {
+        songTextService.createSongText(songId, songText);
 
         return ResponseEntity.ok("Text has been added to song");
     }
 
-    @DeleteMapping("/song/{id}")
-    public ResponseEntity<String> deleteSong(@PathVariable Long id) {
-        songService.deleteSongById(id);
+    @DeleteMapping("/song/{songId}")
+    public ResponseEntity<String> deleteSong(@PathVariable Long songId) {
+        songService.deleteSongById(songId);
 
         return ResponseEntity.ok("Song has been deleted");
     }
@@ -76,10 +83,19 @@ public class SongAdminController {
         return ResponseEntity.ok("All songs has been deleted");
     }
 
-    @PutMapping("/song/{idSong}")
-    public ResponseEntity<SongDTO> updateSong(@PathVariable Long idSong, @RequestBody SongDTO songDTO) {
-        SongDTO updatedSong = songService.updateSong(idSong, songDTO);
+    @PutMapping("/song/{songId}")
+    public ResponseEntity<SongDTO> updateSong(@PathVariable Long idSong,
+                                              @RequestBody @Valid SongCreationRequest songCreationRequest) {
+        SongDTO updatedSong = songService.updateSong(idSong, songCreationRequest);
 
         return ResponseEntity.ok(updatedSong);
+    }
+
+    @PutMapping("songText/{songId}")
+    public ResponseEntity<String> updateSongText(@PathVariable Long songId,
+                                                 @RequestBody @Valid SongTextRequest songText) {
+        songTextService.createSongText(songId, songText);
+
+        return ResponseEntity.ok("Song text has been updated");
     }
 }

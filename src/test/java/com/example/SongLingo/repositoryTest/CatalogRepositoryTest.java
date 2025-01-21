@@ -1,7 +1,7 @@
 package com.example.SongLingo.repositoryTest;
 
-import com.example.SongLingo.flashcards.entity.Catalog;
-import com.example.SongLingo.flashcards.repository.CatalogRepository;
+import com.example.SongLingo.flashcards.catalog.Catalog;
+import com.example.SongLingo.flashcards.catalog.CatalogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

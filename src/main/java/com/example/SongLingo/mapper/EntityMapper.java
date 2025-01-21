@@ -1,18 +1,18 @@
 package com.example.SongLingo.mapper;
 
-import com.example.SongLingo.flashcards.dto.CatalogDTO;
-import com.example.SongLingo.flashcards.dto.FlashCardDTO;
-import com.example.SongLingo.flashcards.entity.Catalog;
-import com.example.SongLingo.flashcards.entity.FlashCard;
-import com.example.SongLingo.song.dto.SongCategoryDTO;
-import com.example.SongLingo.song.dto.SongDTO;
-import com.example.SongLingo.song.dto.SongTextDTO;
-import com.example.SongLingo.song.entity.Song;
-import com.example.SongLingo.song.entity.SongCategory;
-import com.example.SongLingo.song.entity.SongText;
-import com.example.SongLingo.user.dto.AdminDTO;
-import com.example.SongLingo.user.dto.UserDTO;
-import com.example.SongLingo.user.entity.User;
+import com.example.SongLingo.account.user.AdminDTO;
+import com.example.SongLingo.account.user.User;
+import com.example.SongLingo.account.user.UserDTO;
+import com.example.SongLingo.flashcards.catalog.Catalog;
+import com.example.SongLingo.flashcards.catalog.CatalogDTO;
+import com.example.SongLingo.flashcards.flashCard.FlashCard;
+import com.example.SongLingo.flashcards.flashCard.FlashCardDTO;
+import com.example.SongLingo.song.SongText.SongText;
+import com.example.SongLingo.song.SongText.SongTextDTO;
+import com.example.SongLingo.song.song.Song;
+import com.example.SongLingo.song.song.SongDTO;
+import com.example.SongLingo.song.songCategory.SongCategory;
+import com.example.SongLingo.song.songCategory.SongCategoryDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

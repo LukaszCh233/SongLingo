@@ -1,9 +1,9 @@
 package com.example.SongLingo.repositoryTest;
 
-import com.example.SongLingo.flashcards.entity.Catalog;
-import com.example.SongLingo.flashcards.entity.FlashCard;
-import com.example.SongLingo.flashcards.repository.CatalogRepository;
-import com.example.SongLingo.flashcards.repository.FlashCardRepository;
+import com.example.SongLingo.flashcards.catalog.Catalog;
+import com.example.SongLingo.flashcards.catalog.CatalogRepository;
+import com.example.SongLingo.flashcards.flashCard.FlashCard;
+import com.example.SongLingo.flashcards.flashCard.FlashCardRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

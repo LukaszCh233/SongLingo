@@ -1,6 +1,6 @@
 package com.example.SongLingo.config;
 
-import com.example.SongLingo.user.Role;
+import com.example.SongLingo.account.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

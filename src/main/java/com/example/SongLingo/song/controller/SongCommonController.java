@@ -1,12 +1,14 @@
 package com.example.SongLingo.song.controller;
 
-import com.example.SongLingo.song.dto.SongCategoryDTO;
-import com.example.SongLingo.song.dto.SongDTO;
-import com.example.SongLingo.song.dto.SongTextDTO;
-import com.example.SongLingo.song.service.SongCategoryService;
-import com.example.SongLingo.song.service.SongService;
+import com.example.SongLingo.song.SongText.SongTextDTO;
+import com.example.SongLingo.song.SongText.SongTextService;
+import com.example.SongLingo.song.song.SongDTO;
+import com.example.SongLingo.song.song.SongService;
+import com.example.SongLingo.song.songCategory.SongCategoryDTO;
+import com.example.SongLingo.song.songCategory.SongCategoryService;
 import com.example.SongLingo.translate.TranslationService;
 import com.example.SongLingo.translate.WordTranslation;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +20,14 @@ import java.util.List;
 public class SongCommonController {
     private final SongCategoryService songCategoryService;
     private final SongService songService;
+    private final SongTextService songTextService;
     private final TranslationService translationService;
 
     public SongCommonController(SongCategoryService songCategoryService, SongService songService,
-                                TranslationService translationService) {
+                                SongTextService songTextService, TranslationService translationService) {
         this.songCategoryService = songCategoryService;
         this.songService = songService;
+        this.songTextService = songTextService;
         this.translationService = translationService;
     }
 
@@ -64,7 +68,7 @@ public class SongCommonController {
 
     @GetMapping("/song/{id}/text")
     public ResponseEntity<SongTextDTO> displaySongText(@PathVariable Long id) {
-        SongTextDTO songText = songService.findSongTextBySongId(id);
+        SongTextDTO songText = songTextService.findSongTextBySongId(id);
 
         return ResponseEntity.ok(songText);
     }
@@ -77,7 +81,7 @@ public class SongCommonController {
     }
 
     @PostMapping("/translate-word")
-    public ResponseEntity<String> translateWord(@RequestBody WordTranslation wordTranslation) {
+    public ResponseEntity<String> translateWord(@RequestBody @Valid WordTranslation wordTranslation) {
         String translatedWord = translationService.translateWord(wordTranslation);
         return ResponseEntity.ok(translatedWord);
     }

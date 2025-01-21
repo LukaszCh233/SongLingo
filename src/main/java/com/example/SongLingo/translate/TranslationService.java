@@ -1,23 +1,23 @@
 package com.example.SongLingo.translate;
 
-import com.example.SongLingo.song.dto.SongTextDTO;
-import com.example.SongLingo.song.service.SongService;
+import com.example.SongLingo.song.SongText.SongTextDTO;
+import com.example.SongLingo.song.SongText.SongTextService;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.Translation;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TranslationService {
-    private final SongService songService;
+    private final SongTextService songTextService;
     private final Translate translate;
 
-    public TranslationService(SongService songService, Translate translate) {
-        this.songService = songService;
+    public TranslationService(SongTextService songTextService, Translate translate) {
+        this.songTextService = songTextService;
         this.translate = translate;
     }
 
     public String translateSongText(Long songId, String language) {
-        SongTextDTO songText = songService.findSongTextBySongId(songId);
+        SongTextDTO songText = songTextService.findSongTextBySongId(songId);
 
         TextTranslation textTranslation = new TextTranslation(songText.text(), language);
 

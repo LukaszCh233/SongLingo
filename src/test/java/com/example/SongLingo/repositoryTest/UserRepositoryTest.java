@@ -1,8 +1,8 @@
 package com.example.SongLingo.repositoryTest;
 
-import com.example.SongLingo.user.Role;
-import com.example.SongLingo.user.entity.User;
-import com.example.SongLingo.user.repository.UserRepository;
+import com.example.SongLingo.account.user.Role;
+import com.example.SongLingo.account.user.User;
+import com.example.SongLingo.account.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
