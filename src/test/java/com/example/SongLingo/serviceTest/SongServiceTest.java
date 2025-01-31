@@ -6,6 +6,7 @@ import com.example.SongLingo.song.SongText.SongTextService;
 import com.example.SongLingo.song.song.*;
 import com.example.SongLingo.song.songCategory.SongCategory;
 import com.example.SongLingo.song.songCategory.SongCategoryRepository;
+import com.example.SongLingo.song.songCategory.SongCategoryRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SongServiceTest {
 
     @Test
     public void createdSongShouldBeFindInSongList_test() {
-        SongCategory songCategory = newSongCategory("category");
+        SongCategory songCategory = newSongCategory();
         SongCreationRequest songCreationRequest = new SongCreationRequest("title", "author",
                 songCategory.getId());
 
@@ -65,8 +66,9 @@ public class SongServiceTest {
     public void ifCreateSongsWithSameCategoryYouShouldFindThisSongsByCategoryName() {
         newSongWithCategory("title", "author", "category");
         newSongWithCategory("title1", "author2", "category");
+        SongCategoryRequest songCategoryRequest = new SongCategoryRequest("category");
 
-        List<SongDTO> foundSongs = songService.findSongsByCategoryName("category");
+        List<SongDTO> foundSongs = songService.findSongsByCategoryName(songCategoryRequest);
 
         assertEquals(2, foundSongs.size());
         assertEquals("title", foundSongs.get(0).title());
@@ -99,9 +101,9 @@ public class SongServiceTest {
         return songRepository.save(song);
     }
 
-    private SongCategory newSongCategory(String name) {
+    private SongCategory newSongCategory() {
         SongCategory songCategory = new SongCategory();
-        songCategory.setName(name);
+        songCategory.setName("category");
 
         return songCategoryRepository.save(songCategory);
     }

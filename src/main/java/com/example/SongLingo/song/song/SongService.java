@@ -3,11 +3,11 @@ package com.example.SongLingo.song.song;
 import com.example.SongLingo.mapper.EntityMapper;
 import com.example.SongLingo.song.songCategory.SongCategory;
 import com.example.SongLingo.song.songCategory.SongCategoryRepository;
+import com.example.SongLingo.song.songCategory.SongCategoryRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SongService {
@@ -25,8 +25,8 @@ public class SongService {
     public SongDTO createSong(SongCreationRequest songCreationRequest) {
         SongCategory category = songCategoryRepository.findById((songCreationRequest.getCategoryId())).orElseThrow(()
                 -> new EntityNotFoundException("Category not found"));
-        Song createdSong = new Song();
 
+        Song createdSong = new Song();
         createdSong.setTitle(songCreationRequest.getTitle());
         createdSong.setAuthor(songCreationRequest.getAuthor());
         createdSong.setSongCategory(category);
@@ -44,10 +44,10 @@ public class SongService {
         return entityMapper.mapSongsToSongsDTO(songList);
     }
 
-    public List<SongDTO> findSongsByCategoryName(String name) {
-        List<Song> songsOfCategory = songRepository.findBySongCategoryNameIgnoreCase(name);
+    public List<SongDTO> findSongsByCategoryName(SongCategoryRequest songCategoryRequest) {
+        List<Song> songsOfCategory = songRepository.findBySongCategoryNameIgnoreCase(songCategoryRequest.getName());
         if (songsOfCategory.isEmpty()) {
-            throw new EntityNotFoundException("Not found songs");
+            throw new EntityNotFoundException("Songs not found");
         }
         return entityMapper.mapSongsToSongsDTO(songsOfCategory);
     }
@@ -55,7 +55,7 @@ public class SongService {
     public List<SongDTO> findSongsByTitle(String title) {
         List<Song> songList = songRepository.findByTitleIgnoreCase(title);
         if (songList.isEmpty()) {
-            throw new EntityNotFoundException("Not found songs");
+            throw new EntityNotFoundException("Songs not found");
         }
         return entityMapper.mapSongsToSongsDTO(songList);
     }
@@ -63,23 +63,24 @@ public class SongService {
     public List<SongDTO> findSongsByAuthor(String author) {
         List<Song> songList = songRepository.findByAuthorIgnoreCase(author);
         if (songList.isEmpty()) {
-            throw new EntityNotFoundException("Not found songs");
+            throw new EntityNotFoundException("Songs not found");
         }
         return entityMapper.mapSongsToSongsDTO(songList);
     }
 
     public void deleteSongById(Long songId) {
-        Optional<Song> song = songRepository.findById(songId);
-        song.ifPresent(songRepository::delete);
+        Song song = songRepository.findById(songId).orElseThrow(() -> new EntityNotFoundException("Song not found"));
+
+        songRepository.delete(song);
     }
 
     public void deleteAllSongs() {
         songRepository.deleteAll();
     }
 
-    public SongDTO updateSong(Long idSong, SongCreationRequest songCreationRequest) {
+    public void updateSong(Long idSong, SongCreationRequest songCreationRequest) {
         Song songToUpdate = songRepository.findById(idSong).orElseThrow(() ->
-                new EntityNotFoundException("song not found"));
+                new EntityNotFoundException("Song not found"));
 
         SongCategory songCategory = songCategoryRepository.findById(songCreationRequest.getCategoryId())
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
@@ -89,7 +90,5 @@ public class SongService {
         songToUpdate.setSongCategory(songCategory);
 
         songRepository.save(songToUpdate);
-
-        return entityMapper.mapSongToSongDTO(songToUpdate);
     }
 }

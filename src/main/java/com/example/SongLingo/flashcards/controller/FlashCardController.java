@@ -1,10 +1,11 @@
 package com.example.SongLingo.flashcards.controller;
 
 import com.example.SongLingo.flashcards.catalog.CatalogDTO;
+import com.example.SongLingo.flashcards.catalog.CatalogRequest;
 import com.example.SongLingo.flashcards.catalog.CatalogService;
 import com.example.SongLingo.flashcards.flashCard.FlashCardDTO;
+import com.example.SongLingo.flashcards.flashCard.FlashCardRequest;
 import com.example.SongLingo.flashcards.flashCard.FlashCardService;
-import com.example.SongLingo.translate.WordTranslation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,17 +24,16 @@ public class FlashCardController {
         this.catalogService = catalogService;
     }
 
-    @PostMapping("/catalog/{name}")
-    public ResponseEntity<CatalogDTO> addCatalog(@PathVariable String name) {
-        CatalogDTO catalog = catalogService.createCatalog(name);
+    @PostMapping("/catalog")
+    public ResponseEntity<CatalogDTO> addCatalog(@RequestBody @Valid CatalogRequest catalogRequest) {
+        CatalogDTO catalog = catalogService.createCatalog(catalogRequest);
 
         return ResponseEntity.ok(catalog);
     }
 
-    @PostMapping("/flashCard/{id}")
-    public ResponseEntity<FlashCardDTO> addFlashCard(@PathVariable Long id,
-                                                     @RequestBody @Valid WordTranslation wordTranslation) {
-        FlashCardDTO flashCard = flashCardService.createFlashCard(id, wordTranslation);
+    @PostMapping("/flashCard")
+    public ResponseEntity<FlashCardDTO> addFlashCard(@RequestBody @Valid FlashCardRequest flashCardRequest) {
+        FlashCardDTO flashCard = flashCardService.createFlashCard(flashCardRequest);
 
         return ResponseEntity.ok(flashCard);
     }
@@ -53,7 +53,7 @@ public class FlashCardController {
     }
 
     @DeleteMapping("/catalogs")
-    public ResponseEntity<?> deleteAllCatalogs() {
+    public ResponseEntity<String> deleteAllCatalogs() {
         catalogService.deleteAllCatalogs();
 
         return ResponseEntity.ok("Catalogs has been deleted");

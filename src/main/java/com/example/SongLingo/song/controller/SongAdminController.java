@@ -6,6 +6,7 @@ import com.example.SongLingo.song.song.SongCreationRequest;
 import com.example.SongLingo.song.song.SongDTO;
 import com.example.SongLingo.song.song.SongService;
 import com.example.SongLingo.song.songCategory.SongCategory;
+import com.example.SongLingo.song.songCategory.SongCategoryRequest;
 import com.example.SongLingo.song.songCategory.SongCategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ public class SongAdminController {
         this.songTextService = songTextService;
     }
 
-    @PostMapping("/song-category/{categoryName}")
-    public ResponseEntity<SongCategory> addSongCategory(@PathVariable String categoryName) {
-        SongCategory createSongCategory = songCategoryService.createSongCategory(categoryName);
+    @PostMapping("/song-category")
+    public ResponseEntity<SongCategory> addSongCategory(@RequestBody @Valid SongCategoryRequest songCategoryRequest) {
+        SongCategory createSongCategory = songCategoryService.createSongCategory(songCategoryRequest);
 
         return ResponseEntity.ok(createSongCategory);
     }
@@ -46,10 +47,10 @@ public class SongAdminController {
         return ResponseEntity.ok("All categories has been deleted");
     }
 
-    @PutMapping("/song-category/{songCategoryId}/{name}")
+    @PutMapping("/song-category/{songCategoryId}")
     public ResponseEntity<String> updateSongCategory(@PathVariable Long songCategoryId,
-                                                     @PathVariable String name) {
-        songCategoryService.updateSongCategory(songCategoryId, name);
+                                                     @RequestBody @Valid SongCategoryRequest songCategoryRequest) {
+        songCategoryService.updateSongCategory(songCategoryId, songCategoryRequest);
 
         return ResponseEntity.ok("Song category has been updated");
     }
@@ -84,17 +85,17 @@ public class SongAdminController {
     }
 
     @PutMapping("/song/{songId}")
-    public ResponseEntity<SongDTO> updateSong(@PathVariable Long idSong,
-                                              @RequestBody @Valid SongCreationRequest songCreationRequest) {
-        SongDTO updatedSong = songService.updateSong(idSong, songCreationRequest);
+    public ResponseEntity<String> updateSong(@PathVariable Long idSong,
+                                             @RequestBody @Valid SongCreationRequest songCreationRequest) {
+        songService.updateSong(idSong, songCreationRequest);
 
-        return ResponseEntity.ok(updatedSong);
+        return ResponseEntity.ok("Song has been updated");
     }
 
     @PutMapping("songText/{songId}")
     public ResponseEntity<String> updateSongText(@PathVariable Long songId,
-                                                 @RequestBody @Valid SongTextRequest songText) {
-        songTextService.createSongText(songId, songText);
+                                                 @RequestBody @Valid SongTextRequest songTextRequest) {
+        songTextService.createSongText(songId, songTextRequest);
 
         return ResponseEntity.ok("Song text has been updated");
     }

@@ -13,7 +13,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-EXPOSE 8082
+EXPOSE 8080
 
 COPY --from=build /app/target/SongLingo-0.0.1-SNAPSHOT.jar SongLingo-0.0.1-SNAPSHOT.jar
 

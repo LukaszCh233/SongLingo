@@ -2,7 +2,6 @@ package com.example.SongLingo.flashcards.flashCard;
 
 import com.example.SongLingo.flashcards.catalog.Catalog;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -17,7 +16,6 @@ public class FlashCard {
     Long id;
     @ManyToOne
     @JoinColumn(name = "catalog_id")
-    @NotNull(message = "Catalog must not be null")
     Catalog catalog;
     String word;
     String translation;

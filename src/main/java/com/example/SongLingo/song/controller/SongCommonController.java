@@ -5,6 +5,7 @@ import com.example.SongLingo.song.SongText.SongTextService;
 import com.example.SongLingo.song.song.SongDTO;
 import com.example.SongLingo.song.song.SongService;
 import com.example.SongLingo.song.songCategory.SongCategoryDTO;
+import com.example.SongLingo.song.songCategory.SongCategoryRequest;
 import com.example.SongLingo.song.songCategory.SongCategoryService;
 import com.example.SongLingo.translate.TranslationService;
 import com.example.SongLingo.translate.WordTranslation;
@@ -33,7 +34,7 @@ public class SongCommonController {
 
     @GetMapping("/categories")
     public ResponseEntity<List<SongCategoryDTO>> displayAllCategories() {
-        List<SongCategoryDTO> categoryList = songCategoryService.findAllSongCategory();
+        List<SongCategoryDTO> categoryList = songCategoryService.findAllSongsCategory();
 
         return ResponseEntity.ok(categoryList);
     }
@@ -45,9 +46,10 @@ public class SongCommonController {
         return ResponseEntity.ok(songList);
     }
 
-    @GetMapping("songs/category/{name}")
-    public ResponseEntity<List<SongDTO>> displaySongsByCategory(@PathVariable String name) {
-        List<SongDTO> songsOfCategory = songService.findSongsByCategoryName(name);
+    @GetMapping("songs/category")
+    public ResponseEntity<List<SongDTO>> displaySongsByCategory(
+            @RequestBody @Valid SongCategoryRequest songCategoryRequest) {
+        List<SongDTO> songsOfCategory = songService.findSongsByCategoryName(songCategoryRequest);
 
         return ResponseEntity.ok(songsOfCategory);
     }

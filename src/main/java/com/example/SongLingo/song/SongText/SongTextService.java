@@ -4,7 +4,6 @@ import com.example.SongLingo.mapper.EntityMapper;
 import com.example.SongLingo.song.song.Song;
 import com.example.SongLingo.song.song.SongRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,9 +22,8 @@ public class SongTextService {
         return entityMapper.mapSongTextToSongTextDTO(song.getSongText());
     }
 
-    @Transactional
     public void createSongText(Long songId, SongTextRequest songTextRequest) {
-        Song song = songRepository.findById(songId).orElseThrow(() -> new EntityNotFoundException("Not found song"));
+        Song song = songRepository.findById(songId).orElseThrow(() -> new EntityNotFoundException("Song not found"));
 
         song.getSongText().setText(songTextRequest.getText());
 

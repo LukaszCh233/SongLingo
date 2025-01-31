@@ -26,16 +26,18 @@ public class FlashCardService {
         this.entityMapper = entityMapper;
     }
 
-    public FlashCardDTO createFlashCard(Long catalogId, WordTranslation wordTranslation) {
-        Catalog catalog = catalogRepository.findById(catalogId).orElseThrow(() ->
-                new EntityNotFoundException("Not found catalog"));
+    public FlashCardDTO createFlashCard(FlashCardRequest flashCardRequest) {
+        Catalog catalog = catalogRepository.findById(flashCardRequest.getCatalogId()).orElseThrow(() ->
+                new EntityNotFoundException("Catalog not found"));
 
-        if (flashCardRepository.findByWordIgnoreCase(wordTranslation.getWord()).isPresent()) {
+        if (flashCardRepository.findByWordIgnoreCase(flashCardRequest.getWord()).isPresent()) {
             throw new ExistsException("This word exists");
         }
+        WordTranslation wordTranslation = new WordTranslation(flashCardRequest.getWord(), flashCardRequest.getLanguage());
+
         String translation = translationService.translateWord(wordTranslation);
         FlashCard flashCard = new FlashCard();
-        flashCard.setWord(wordTranslation.getWord());
+        flashCard.setWord(flashCardRequest.getWord());
         flashCard.setTranslation(translation);
         flashCard.setCatalog(catalog);
         catalog.getFlashCards().add(flashCard);
@@ -46,10 +48,7 @@ public class FlashCardService {
     }
 
     public List<FlashCardDTO> findFlashCardsByCatalogId(Long catalogId) {
-        Catalog catalog = catalogRepository.findById(catalogId).orElseThrow(() ->
-                new EntityNotFoundException("Not found catalog"));
-
-        List<FlashCard> flashCardList = catalog.getFlashCards();
+        List<FlashCard> flashCardList = flashCardRepository.findByCatalogId(catalogId);
         if (flashCardList.isEmpty()) {
             throw new EntityNotFoundException("Catalog is empty");
         }
